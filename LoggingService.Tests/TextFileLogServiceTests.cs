@@ -67,10 +67,10 @@ namespace LoggingService.Tests
 
         #endregion
 
-        #region ReadLogAsync Tests
+        #region GetLog Tests
 
         [Test]
-        public void ReadLogAsync_ShouldReturnCorrectLog_WhenLogExists()
+        public void GetLog_ShouldReturnCorrectLog_WhenLogExists()
         {
             // Act
             var log = _logService.GetLog(1);
@@ -85,7 +85,7 @@ namespace LoggingService.Tests
         }
 
         [Test]
-        public void ReadLogAsync_ShouldThrowException_WhenLogDoesNotExist()
+        public void GetLog_ShouldThrowException_WhenLogDoesNotExist()
         {
             // Act & Assert
             var ex = Assert.Throws<NotFoundException>(() => _logService.GetLog(99));
@@ -94,10 +94,10 @@ namespace LoggingService.Tests
 
         #endregion
 
-        #region ReadLogsAsync Tests
+        #region GetLogs Tests
 
         [Test]
-        public void ReadLogsAsync_ShouldReturnLogsOrderedByDate()
+        public void GetLogs_ShouldReturnLogsOrderedByDate()
         {
             // Act
             var logs = _logService.GetLogs().ToList();
@@ -108,7 +108,7 @@ namespace LoggingService.Tests
         }
 
         [Test]
-        public void ReadLogsAsync_ShouldReturnLogsInDateRange()
+        public void GetLogs_ShouldReturnLogsInDateRange()
         {
             // Arrange
             var from = DateTime.UtcNow.AddMinutes(-15);
@@ -122,7 +122,7 @@ namespace LoggingService.Tests
         }
 
         [Test]
-        public void ReadLogsAsync_ShouldReturnEmpty_WhenNoLogsInDateRange()
+        public void GetLogs_ShouldReturnEmpty_WhenNoLogsInDateRange()
         {
             // Arrange
             var from = DateTime.UtcNow.AddDays(-10);
