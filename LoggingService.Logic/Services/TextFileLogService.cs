@@ -28,6 +28,11 @@ namespace LoggingService.Logic.Services
         /// <exception cref="InvalidRequestException"></exception>
         public async Task WriteLogAsync(LogEntry logEntry)
         {
+            if (logEntry.Body.Length > 255)
+            {
+                throw new InvalidRequestException("Maximum length for a log message is 255 characters.");
+            }
+
             await Semaphore.WaitAsync();
             try
             {
