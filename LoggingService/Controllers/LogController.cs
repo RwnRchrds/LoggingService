@@ -17,6 +17,7 @@ namespace LoggingService.Controllers
             _logService = logService;
         }   
 
+        
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> AddLog([FromBody] LogEntry logEntry)

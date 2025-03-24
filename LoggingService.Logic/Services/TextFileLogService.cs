@@ -20,6 +20,12 @@ namespace LoggingService.Logic.Services
             LoadCache();
         }
 
+        /// <summary>
+        /// Writes a log entry to the log file.
+        /// </summary>
+        /// <param name="logEntry"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidRequestException"></exception>
         public async Task WriteLogAsync(LogEntry logEntry)
         {
             await Semaphore.WaitAsync();
@@ -41,6 +47,12 @@ namespace LoggingService.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves a log entry by its unique identifier.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException"></exception>
         public LogEntry GetLog(int id)
         {
             if (_logCache.TryGetValue(id, out var log))
@@ -51,11 +63,21 @@ namespace LoggingService.Logic.Services
             throw new NotFoundException($"Log with id {id} not found.");
         }
 
+        /// <summary>
+        /// Retrieves all log entries.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<LogEntry> GetLogs()
         {
             return _logCache.Values.OrderByDescending(l => l.Date);
         }
 
+        /// <summary>
+        /// Retrieves all log entries within a specified date range.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public IEnumerable<LogEntry> GetLogs(DateTime from, DateTime to)
         {
             var filteredLogs = _logCache.Values
@@ -65,6 +87,10 @@ namespace LoggingService.Logic.Services
             return filteredLogs;
         }
 
+        /// <summary>
+        /// Clears all log entries.
+        /// </summary>
+        /// <returns></returns>
         public async Task ClearLogs()
         {
             await Semaphore.WaitAsync();
